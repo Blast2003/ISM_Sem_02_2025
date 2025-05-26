@@ -56,10 +56,14 @@ if (process.env.NODE_ENV === "production") {
 
 }
 
- 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Server listen at port ${PORT}`);
-})
+ (async () => {
+  try {
+    const conn = await connectDB();
+    console.log("✅ DB Connected to:", conn.connection.host);
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  } catch (err) {
+    console.error("❌ Failed to start server:", err);
+  }
+})();
 
 
