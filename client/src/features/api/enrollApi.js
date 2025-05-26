@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const COURSE_ENROLL_API = "http://localhost:3000/api/v1/courseEnroll";
+const COURSE_ENROLL_API = "https://ism-sem-02-2025.onrender.com/api/v1/courseEnroll";
 
 export const enrollApi = createApi({
   reducerPath: "enrollApi",
