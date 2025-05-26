@@ -17,17 +17,22 @@ dotenv.config({});
 const __dirname = path.resolve();
 
 // call database connection here
-connectDB();
 const app = express();
 
-const PORT = process.env.PORT || 3031;
+const PORT = process.env.PORT || 3000;
 
 // default middleware
-app.use(express.json());
+app.use(express.json({limit: "50mb"}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(cors());
 
+// Explicitly set COOP header for relevant routes
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
+  next();
+});
  
 // apis
 app.use("/api/v1/media", mediaRoute);
@@ -38,7 +43,7 @@ app.use("/api/v1/progress", courseProgressRoute);
 app.use("/api/v1/courseEnroll", courseEnrollRoute);
 
 
-// http://localhost:3031 + http://localhost:5173 = http://localhost:3031 => backend server, frontend server
+// http://localhost:3000 + http://localhost:5173 = http://localhost:3000 => backend server, frontend server
 // server static assets if in production
 if (process.env.NODE_ENV === "production") {
   
@@ -53,6 +58,7 @@ if (process.env.NODE_ENV === "production") {
 
  
 app.listen(PORT, () => {
+    connectDB();
     console.log(`Server listen at port ${PORT}`);
 })
 
