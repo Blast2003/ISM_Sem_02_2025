@@ -20,7 +20,7 @@ const __dirname = path.resolve();
 connectDB();
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3031;
 
 // default middleware
 app.use(express.json());
@@ -28,11 +28,6 @@ app.use(cookieParser());
 
 app.use(cors());
 
-// Explicitly set COOP header for relevant routes
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
-  next();
-});
  
 // apis
 app.use("/api/v1/media", mediaRoute);
@@ -43,7 +38,7 @@ app.use("/api/v1/progress", courseProgressRoute);
 app.use("/api/v1/courseEnroll", courseEnrollRoute);
 
 
-// http://localhost:3000 + http://localhost:5173 = http://localhost:3000 => backend server, frontend server
+// http://localhost:3031 + http://localhost:5173 = http://localhost:3031 => backend server, frontend server
 // server static assets if in production
 if (process.env.NODE_ENV === "production") {
   
